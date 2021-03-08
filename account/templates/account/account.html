@@ -73,7 +73,7 @@
 		  <div class="card-body">
 		  	<div class="d-flex flex-column justify-content-center p-4">
 		  		<div class="image-container mx-auto mb-4">
-		  			<img class="d-block border border-dark rounded-circle img-fluid mx-auto profile-image" alt="nextchat" id="id_profile_image" src="{{request.user.profile_image.url}}">
+		  			<img class="d-block border border-dark rounded-circle img-fluid mx-auto profile-image" alt="nextchat" id="id_profile_image" src="{{profile_image.url}}">
 		  		</div>
 		  		<p class="mt-4 mb-1 field-heading">Email</p>
 		  		{%  if is_self %}
@@ -148,7 +148,7 @@
 				
 				<!-- Friend list link -->
 		  		<div class="d-flex flex-column pt-4">
-					<a href="#">
+					<a href="{% url 'friend:list' user_id=id %}">
 						<div class="d-flex flex-row align-items-center justify-content-center icon-container">
 							<span class="material-icons mr-2 friends-icon">contact_page</span><span class="friend-text">Friends ({{friends|length}})</span>
 						</div>
@@ -160,7 +160,7 @@
 			<div class="card m-2 px-4 pb-4">
 				<!-- Friend requests -->
 		  		<div class="d-flex flex-column pt-4">
-					<a href="#">
+					<a href="{% url 'friend:friend-requests' user_id=id %}">
 						<div class="d-flex flex-row align-items-center justify-content-center icon-container">
 							<span class="material-icons mr-2 person-add-icon">person_add</span><span class="friend-text">Friend Requests ({{friend_requests|length}})</span>
 						</div>
@@ -221,14 +221,14 @@
 	var cancelFriendRequestBtn = document.getElementById("id_cancel_friend_request_btn")
 	if(cancelFriendRequestBtn != null){
 		cancelFriendRequestBtn.addEventListener("click", function(){
-			//cancelFriendRequest("{{id}}", onFriendRequestCancelled)
+			cancelFriendRequest("{{id}}", onFriendRequestCancelled)
 		})
 	}
 
 	var removeFriendBtn = document.getElementById("id_unfriend_btn")
 	if (removeFriendBtn != null){
 		removeFriendBtn.addEventListener("click", function(){
-			//removeFriend("{{id}}", onFriendRemoved)
+			removeFriend("{{id}}", onFriendRemoved)
 		})
 	}
 
@@ -243,13 +243,13 @@
 </script>
 
 {% include 'friend/snippets/send_friend_request.html' %}
+{% include 'friend/snippets/remove_friend.html' %}
+{% include 'friend/snippets/decline_friend_request.html' %}
+{% include 'friend/snippets/cancel_friend_request.html' %}
+{% include 'friend/snippets/accept_friend_request.html' %}
 
 
 
-{#% include 'friend/snippets/accept_friend_request.html' %#}
-{#% include 'friend/snippets/decline_friend_request.html' %#}
-{#% include 'friend/snippets/cancel_friend_request.html' %#}
-{#% include 'friend/snippets/remove_friend.html' %#}
 {#% include 'chat/create_or_return_private_chat.html' %#}
 
 
